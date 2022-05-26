@@ -748,7 +748,7 @@ public class VSmode extends JFrame {
         if(mode == item_mode)
         {
             if(true || p.item_rotate > 4) {
-                //item_rotate -= 5;
+                p.item_rotate -= 5;
                 p.next_block = getRandomBlock();
                 Random rnd = new Random();
                 if(rnd.nextInt(100) < 80)
