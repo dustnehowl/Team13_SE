@@ -429,7 +429,7 @@ public class Board extends JFrame {
 			erase_line_check++;
 			for(int i=lowest;i>=y;i--){
 				for(int j=0;j<WIDTH;j++){
-					if(board[i][j]>6){
+					if(board[i][j]>animate_idx){
 						board[i][j]-=animate_idx;
 					}
 				}
