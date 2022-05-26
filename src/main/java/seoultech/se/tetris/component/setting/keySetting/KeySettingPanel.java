@@ -117,8 +117,8 @@ public class KeySettingPanel extends JPanel {
             if(label == currLeft) keyArr[0] = e.getKeyCode();
             else if(label == currRight) keyArr[1] = e.getKeyCode();
             else if(label == currDown) keyArr[2] = e.getKeyCode();
-            else if(label == currHarddrop) keyArr[3] = e.getKeyCode();
-            else if(label == currPause) keyArr[4] = e.getKeyCode();
+            else if(label == currRotate) keyArr[3] = e.getKeyCode();
+            else if(label == currHarddrop) keyArr[4] = e.getKeyCode();
             else keyArr[5] = e.getKeyCode();
         }
 
