@@ -18,7 +18,7 @@ import seoultech.se.tetris.component.model.DataManager;
 import seoultech.se.tetris.component.pause.Pause;
 
 
-public class Board extends JFrame {
+public class Board extends JFrame implements KeyListener{
 
 	private static final long serialVersionUID = 2434035659171694595L;
 	
@@ -51,7 +51,6 @@ public class Board extends JFrame {
 	private int[][] board;
 	private int[][] next_board;
 	private Color[][] color_board;
-	private KeyListener playerKeyListener;
 	private SimpleAttributeSet styleSet;
 	private Timer timer;
 	private Timer press_timer;
@@ -184,8 +183,7 @@ public class Board extends JFrame {
 				color_board[i][j]=Color.white;
 			}
 		}//color_board 초기화
-		playerKeyListener = new PlayerKeyListener();
-		addKeyListener(playerKeyListener);
+		addKeyListener(this);
 		setFocusable(true);
 		requestFocus();
 
@@ -785,50 +783,47 @@ public class Board extends JFrame {
 		drawBoard();
 	}
 
-	public class PlayerKeyListener implements KeyListener {
-		@Override
-		public void keyTyped(KeyEvent e) {
+	@Override
+	public void keyTyped(KeyEvent e) {
 
-		}
+	}
 
-		@Override
-		public void keyPressed(KeyEvent e) {
-			if(timerflag==0)
-				return;
-			try {
-				if(e.getKeyCode() == key_left) {
-					moveLeft();
-					drawBoard();
-				}
-				else if(e.getKeyCode() == key_right) {
-					moveRight();
-					drawBoard();
-				}
-				else if(e.getKeyCode() == key_rotate) {
-					rotateblock();
-					//System.out.println("width : " + curr.width() + " height : " + curr.height());
-					drawBoard();
-				}
-				else if(e.getKeyCode() == key_harddrop) {
-					harddrop();
-				}
-				else if(e.getKeyCode() == key_pause) {
-					pause();
-				}
-				else if(e.getKeyCode() == key_down) {
-					moveDown();
-					drawBoard();
-				}
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if(timerflag==0)
+			return;
+		try {
+			if(e.getKeyCode() == key_left) {
+				moveLeft();
+				drawBoard();
 			}
-			catch(IOException ex) {
-				System.out.println(ex);
+			else if(e.getKeyCode() == key_right) {
+				moveRight();
+				drawBoard();
+			}
+			else if(e.getKeyCode() == key_rotate) {
+				rotateblock();
+				//System.out.println("width : " + curr.width() + " height : " + curr.height());
+				drawBoard();
+			}
+			else if(e.getKeyCode() == key_harddrop) {
+				harddrop();
+			}
+			else if(e.getKeyCode() == key_pause) {
+				pause();
+			}
+			else if(e.getKeyCode() == key_down) {
+				moveDown();
+				drawBoard();
 			}
 		}
-
-		@Override
-		public void keyReleased(KeyEvent e) {
-
+		catch(IOException ex) {
+			System.out.println(ex);
 		}
 	}
-	
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+
+	}
 }
