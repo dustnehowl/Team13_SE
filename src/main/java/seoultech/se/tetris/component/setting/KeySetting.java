@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class KeySetting extends JFrame{
+public class KeySetting extends JFrame implements ActionListener{
 
     private Container container;
     private JPanel backButtonPanel, menuPanel;
@@ -39,7 +39,7 @@ public class KeySetting extends JFrame{
         backButtonPanel.setBounds(10,10,backButton.getWidth(),backButton.getHeight());
         backButtonPanel.setOpaque(false);
 
-        backButton.addActionListener(listner);
+        backButton.addActionListener(this);
         backButtonPanel.add(backButton);
     }
 
@@ -63,7 +63,7 @@ public class KeySetting extends JFrame{
         p1KeySetting.setRolloverIcon(level_activate);
         p1KeySetting.setBorderPainted(false);
         p1KeySetting.setPreferredSize(new Dimension(180, 60));
-        p1KeySetting.addActionListener(listner);
+        p1KeySetting.addActionListener(this);
         p1KeySetting.setOpaque(false);
         levelPanel.add(p1KeySetting);
 
@@ -72,7 +72,7 @@ public class KeySetting extends JFrame{
         p2KeySetting.setRolloverIcon(colorweak_activate);
         p2KeySetting.setBorderPainted(false);
         p2KeySetting.setPreferredSize(new Dimension(180, 60));
-        p2KeySetting.addActionListener(listner);
+        p2KeySetting.addActionListener(this);
         p2KeySetting.setOpaque(false);
         colorWeakPanel.add(p2KeySetting);
 
@@ -81,23 +81,21 @@ public class KeySetting extends JFrame{
         menuPanel.add(colorWeakPanel);
     }
 
-    ActionListener listner = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (backButton.equals(e.getSource())) { //terminateButton pressed
-                new Setting(getThis().getLocation().x, getThis().getLocation().y);
-                disPose();
-            }
-            else if (p1KeySetting.equals(e.getSource())) { // restartButton pressed
-                new P1KeySetting(getThis().getLocation().x, getThis().getLocation().y);
-                disPose();
-            }
-            else if (p2KeySetting.equals(e.getSource())) { // restartButton pressed
-                new P2KeySetting(getThis().getLocation().x, getThis().getLocation().y);
-                disPose();
-            }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (backButton.equals(e.getSource())) { //terminateButton pressed
+            new Setting(getThis().getLocation().x, getThis().getLocation().y);
+            disPose();
         }
-    };
+        else if (p1KeySetting.equals(e.getSource())) { // restartButton pressed
+            new P1KeySetting(getThis().getLocation().x, getThis().getLocation().y);
+            disPose();
+        }
+        else if (p2KeySetting.equals(e.getSource())) { // restartButton pressed
+            new P2KeySetting(getThis().getLocation().x, getThis().getLocation().y);
+            disPose();
+        }
+    }
 
     private void disPose() {
         this.dispose();

@@ -8,8 +8,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class Resetting extends JFrame {
+public class Resetting extends JFrame implements ActionListener {
     private Container container;
     private JPanel backButtonPanel, menuPanel;
     private JButton backButton;
@@ -32,7 +34,7 @@ public class Resetting extends JFrame {
     private void setbackButtonPanel(){
         backButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         backButton = new JButton("back");
-        backButton.addActionListener(listner);
+        backButton.addActionListener(this);
         backButtonPanel.add(backButton);
     }
 
@@ -43,7 +45,7 @@ public class Resetting extends JFrame {
         this.reset = new JButton("reset");
 
         this.reset.setPreferredSize(new Dimension(180, 60));
-        this.reset.addActionListener(listner);
+        this.reset.addActionListener(this);
         this.reset.setFocusPainted(false);
         resetPanel.add(this.reset);
 
@@ -51,14 +53,14 @@ public class Resetting extends JFrame {
         resetTable = new JButton("reset Normal Mode");
 
         resetTable.setPreferredSize(new Dimension(180, 60));
-        resetTable.addActionListener(listner);
+        resetTable.addActionListener(this);
         resetTable.setFocusPainted(false);
         resetTablePanel.add(resetTable);
 
         JPanel resetItemTablePanel = new JPanel();
         resetItemTable = new JButton("reset Item Mode Socre");
         resetItemTable.setPreferredSize(new Dimension(180, 60));
-        resetItemTable.addActionListener(listner);
+        resetItemTable.addActionListener(this);
         resetItemTable.setFocusPainted(false);
         resetItemTablePanel.add(resetItemTable);
 
@@ -67,35 +69,42 @@ public class Resetting extends JFrame {
         menuPanel.add(resetItemTablePanel);
 
     }
-    ActionListener listner = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (backButton.equals(e.getSource())) {
-                go_back();
-            }
-            else if (reset.equals(e.getSource())) { // restartButton pressed
-                DataManager.getInstance().resetting();
-                reset.setEnabled(false);
-            }
-            else if (resetTable.equals(e.getSource())) { // restartButton pressed
-                String key = ScoreDataManager.getInstance().getNormKey();
-                ScoreDataManager.getInstance().resetting(key);
-                resetTable.setEnabled(false);
-            }
-            else if(resetItemTable.equals(e.getSource())) {
-                String key = ScoreDataManager.getInstance().getItemKey();
-                ScoreDataManager.getInstance().resetting(key);
-                resetItemTable.setEnabled(false);
-            }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (backButton.equals(e.getSource())) {
+            go_back();
         }
-    };
-
+        else if (reset.equals(e.getSource())) { // restartButton pressed
+            DataManager.getInstance().resetting();
+            reset.setEnabled(false);
+        }
+        else if (resetTable.equals(e.getSource())) { // restartButton pressed
+            String key = ScoreDataManager.getInstance().getNormKey();
+            ScoreDataManager.getInstance().resetting(key);
+            resetTable.setEnabled(false);
+        }
+        else if(resetItemTable.equals(e.getSource())) {
+            String key = ScoreDataManager.getInstance().getItemKey();
+            ScoreDataManager.getInstance().resetting(key);
+            resetItemTable.setEnabled(false);
+        }
+    }
     private void go_back(){
         new Setting(getThis().getLocation().x, getThis().getLocation().y);
         getThis().dispose();
     }
 
-
     private JFrame getThis() {return this;}
 
+    public JButton getReset() {
+        return reset;
+    }
+
+    public JButton getResetItemTable() {
+        return resetItemTable;
+    }
+
+    public JButton getResetTable() {
+        return resetTable;
+    }
 }

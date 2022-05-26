@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class LevelSetting extends JFrame {
+public class LevelSetting extends JFrame implements ActionListener{
     private Container container;
     private JPanel backButtonPanel, menuPanel;
     private JButton backButton;
@@ -33,7 +33,7 @@ public class LevelSetting extends JFrame {
     private void setbackButtonPanel(){
         backButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         backButton = new JButton("back");
-        backButton.addActionListener(listner);
+        backButton.addActionListener(this);
         backButtonPanel.add(backButton);
     }
 
@@ -47,7 +47,7 @@ public class LevelSetting extends JFrame {
         if(easy.getText().equals(stat)) easy.setSelected(true);
         easy.setPreferredSize(new Dimension(180, 60));
         easy.setFocusPainted(false);
-        easy.addActionListener(listner);
+        easy.addActionListener(this);
         easyPanel.add(easy);
 
         JPanel normalPanel = new JPanel();
@@ -55,7 +55,7 @@ public class LevelSetting extends JFrame {
         if(normal.getText().equals(stat)) normal.setSelected(true);
 
         normal.setPreferredSize(new Dimension(180, 60));
-        normal.addActionListener(listner);
+        normal.addActionListener(this);
         normal.setFocusPainted(false);
         normalPanel.add(normal);
 
@@ -64,7 +64,7 @@ public class LevelSetting extends JFrame {
         if(hard.getText().equals(stat)) hard.setSelected(true);
 
         hard.setPreferredSize(new Dimension(180, 60));
-        hard.addActionListener(listner);
+        hard.addActionListener(this);
         hard.setFocusPainted(false);
         hardPanel.add(hard);
 
@@ -74,33 +74,43 @@ public class LevelSetting extends JFrame {
         menuPanel.add(normalPanel);
         menuPanel.add(hardPanel);
     }
-
-    ActionListener listner = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (backButton.equals(e.getSource())) {
-                go_back();
-            }
-            else if (easy.equals(e.getSource())) { // restartButton pressed
-                DataManager.getInstance().setLevel("easy");
-                go_back();
-            }
-            else if (normal.equals(e.getSource())) { // restartButton pressed
-
-                DataManager.getInstance().setLevel("normal");
-                go_back();
-            }
-            else { // restartButton pressed
-
-                DataManager.getInstance().setLevel("hard");
-                go_back();
-            }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (backButton.equals(e.getSource())) {
+            go_back();
         }
-    };
+        else if (easy.equals(e.getSource())) { // restartButton pressed
+            DataManager.getInstance().setLevel("easy");
+            go_back();
+        }
+        else if (normal.equals(e.getSource())) { // restartButton pressed
+
+            DataManager.getInstance().setLevel("normal");
+            go_back();
+        }
+        else { // restartButton pressed
+
+            DataManager.getInstance().setLevel("hard");
+            go_back();
+        }
+    }
+
 
     private void go_back(){
         new Setting(getThis().getLocation().x, getThis().getLocation().y);
         getThis().dispose();
+    }
+
+    public JButton getEasy() {
+        return easy;
+    }
+
+    public JButton getNormal() {
+        return normal;
+    }
+
+    public JButton getHard() {
+        return hard;
     }
 
     private JFrame getThis() {return this;}

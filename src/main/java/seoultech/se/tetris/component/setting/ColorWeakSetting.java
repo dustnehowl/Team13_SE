@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class ColorWeakSetting extends JFrame {
+public class ColorWeakSetting extends JFrame implements ActionListener{
     private Container container;
     private JPanel backButtonPanel, menuPanel;
     private JButton backButton;
@@ -32,7 +32,7 @@ public class ColorWeakSetting extends JFrame {
     private void setbackButtonPanel(){
         backButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         backButton = new JButton("back");
-        backButton.addActionListener(listner);
+        backButton.addActionListener(this);
         backButtonPanel.add(backButton);
     }
 
@@ -46,7 +46,7 @@ public class ColorWeakSetting extends JFrame {
             on.setSelected(true);
         }
         on.setPreferredSize(new Dimension(180, 60));
-        on.addActionListener(listner);
+        on.addActionListener(this);
         on.setFocusPainted(false);
         onPanel.add(on);
 
@@ -56,7 +56,7 @@ public class ColorWeakSetting extends JFrame {
             off.setSelected(true);
         }
         off.setPreferredSize(new Dimension(180, 60));
-        off.addActionListener(listner);
+        off.addActionListener(this);
         off.setFocusPainted(false);
         offPanel.add(off);
 
@@ -65,22 +65,29 @@ public class ColorWeakSetting extends JFrame {
         menuPanel.add(offPanel);
 
     }
-    ActionListener listner = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (backButton.equals(e.getSource())) {
-                go_back();
-            }
-            else if (on.equals(e.getSource())) { // restartButton pressed
-                DataManager.getInstance().setColor_weak("on");
-                go_back();
-            }
-            else if (off.equals(e.getSource())) { // restartButton pressed
-                DataManager.getInstance().setColor_weak("off");
-                go_back();
-            }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (backButton.equals(e.getSource())) {
+            go_back();
         }
-    };
+        else if (on.equals(e.getSource())) { // restartButton pressed
+            DataManager.getInstance().setColor_weak("on");
+            go_back();
+        }
+        else if (off.equals(e.getSource())) { // restartButton pressed
+            DataManager.getInstance().setColor_weak("off");
+            go_back();
+        }
+    }
+
+    public JButton getOn() {
+        return on;
+    }
+
+    public JButton getOff() {
+        return off;
+    }
 
     private void go_back(){
         new Setting(getThis().getLocation().x, getThis().getLocation().y);
