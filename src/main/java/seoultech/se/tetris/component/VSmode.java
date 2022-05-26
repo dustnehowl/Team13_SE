@@ -765,7 +765,7 @@ public class VSmode extends JFrame {
             p.erase_line_check++;
             for(int i=lowest;i>=p.y;i--){
                 for(int j=0;j<WIDTH;j++){
-                    if(p.board[i][j]>6){
+                    if(p.board[i][j]>animate_idx){
                         p.board[i][j]-=animate_idx;
                     }
                 }
