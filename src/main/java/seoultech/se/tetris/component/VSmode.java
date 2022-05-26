@@ -661,6 +661,7 @@ public class VSmode extends JFrame {
 
     protected void moveDown(Player p) throws IOException { //구조를 조금 바꿈 갈수잇는지 먼저 확인후에 갈수있으면 지우고 이동
         int total_score = p.total_score;
+        p.total_score += 1;
         String loser;
 
         if(p.sirial == sirialp1) loser = "Player1";
@@ -919,7 +920,6 @@ public class VSmode extends JFrame {
     }
 
     private boolean isBlocked(char move, Player p){ //블럭이 갈 수 있는지 확인하는 함수('d' : 아래, 'r' : 오른쪽, 'l' : 왼쪽)
-        p.total_score += 1;
         int y = p.y, x = p.x;
         Block curr = p.curr;
         int[][] board = p.board;
