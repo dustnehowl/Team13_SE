@@ -201,6 +201,14 @@ public class Board extends JFrame implements KeyListener{
 		timerflag=1;
 	}
 
+	public static int getLev_block() {
+		return lev_block;
+	}
+
+	public static void setLev_block(int lev_block) {
+		Board.lev_block = lev_block;
+	}
+
 	private void setMain_panel(){
 		main_panel = new JPanel();
 
@@ -268,6 +276,9 @@ public class Board extends JFrame implements KeyListener{
 		key_down = code;
 	}
 
+	public Block getRandomblock() throws IOException {
+		return getRandomBlock();
+	}
 
 	private Block getRandomBlock() throws IOException {
 		//testRandomBlock();
