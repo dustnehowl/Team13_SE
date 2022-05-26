@@ -17,7 +17,7 @@ import java.io.IOException;
 
 import static javax.swing.JOptionPane.showMessageDialog;
 
-public class TetrisMenu extends JFrame {
+public class TetrisMenu extends JFrame implements KeyListener{
     private ImageIcon menuList[] = new ImageIcon[6];
     private Container c;
     private int menuNum = 0;
@@ -47,10 +47,12 @@ public class TetrisMenu extends JFrame {
         //mainPanel = new JPanel();
         //displayGameName();
         setButton();
-        keylistner = new MenuKeyListener();
-        this.addKeyListener(keylistner);
+        addKeyListener(this);
+//        this.addKeyListener(keylistner);
         this.setFocusable(true);
-        menuButton.addKeyListener(keylistner);
+//        menuButton.addKeyListener(keylistner);
+        menuButton.addKeyListener(this);
+
         menuButton.setFocusable(true);
 
         menuPane.setBounds(100,280,300,300);
@@ -145,57 +147,48 @@ public class TetrisMenu extends JFrame {
             default:
         }
     }
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int button_size = menuList.length;
 
-    private class MenuKeyListener implements KeyListener {
-        @Override
-        public void keyTyped(KeyEvent e) {
-        }
-        @Override
-        public void keyPressed(KeyEvent e) {
-            int button_size = menuList.length;
+        switch(e.getKeyCode()) {
+            case KeyEvent.VK_ENTER:
+                //해당 class로 이동
+                try {
+                    enterPressed();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+                break;
+            case KeyEvent.VK_DOWN:
+                menuNum = (menuNum + 1)%button_size;
+                menuButton.setIcon(menuList[menuNum]);
+                break;
 
-            switch(e.getKeyCode()) {
-                case KeyEvent.VK_ENTER:
-                    //해당 class로 이동
-                    try {
-                        enterPressed();
-                    } catch (IOException ioException) {
-                        ioException.printStackTrace();
-                    }
-                    break;
-                case KeyEvent.VK_DOWN:
-                    menuNum = (menuNum + 1)%button_size;
-                    menuButton.setIcon(menuList[menuNum]);
-                    break;
+            case KeyEvent.VK_UP:
+                if(menuNum == 0) menuNum = button_size-1;
+                else   menuNum--;
+                menuButton.setIcon(menuList[menuNum]);
 
-                case KeyEvent.VK_UP:
-                    if(menuNum == 0) menuNum = button_size-1;
-                    else   menuNum--;
-                    menuButton.setIcon(menuList[menuNum]);
+                break;
 
-                    break;
-
-                default:
-                    JOptionPane errorPane = new JOptionPane();
-                    errorPane.showMessageDialog(null, "up, down, enter만 누를수 있습니다.","KEY_ERROR", JOptionPane.WARNING_MESSAGE);
-
-
-                    /*
-                    경고창 class 호출
-
-                    content : u can press up down enter
-
-                    -> button(확인)
-                     */
-
-            }
+            default:
+                JOptionPane errorPane = new JOptionPane();
+                errorPane.showMessageDialog(null, "up, down, enter만 누를수 있습니다.","KEY_ERROR", JOptionPane.WARNING_MESSAGE);
 
         }
 
-        @Override
-        public void keyReleased(KeyEvent e) {
-
-        }
     }
 
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
+
+    public int getMenuNum() {
+        return menuNum;
+    }
 }

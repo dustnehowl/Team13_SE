@@ -98,7 +98,6 @@ public class EndGame extends JFrame {
     ActionListener listner = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("action performed");
             if(terminate.equals(e.getSource())){ //terminateButton pressed
                 new TetrisMenu(getLocation().x, getLocation().y);
                 disPose();
@@ -112,8 +111,6 @@ public class EndGame extends JFrame {
                 disPose();
             }
             else if (addButton.equals(e.getSource())){ //addButton pressed
-                System.out.println("add button pressed");
-
                 String trimName = writeName.getText().trim();
                 if(trimName.equals("")){
                     JOptionPane errorPane = new JOptionPane();

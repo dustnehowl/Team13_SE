@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class DisplaySetting extends JFrame {
+public class DisplaySetting extends JFrame implements ActionListener{
     private Container container;
     private JPanel backButtonPanel, menuPanel;
     private JButton backButton;
@@ -32,7 +32,7 @@ public class DisplaySetting extends JFrame {
     private void setbackButtonPanel(){
         backButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         backButton = new JButton("back");
-        backButton.addActionListener(listner);
+        backButton.addActionListener(this);
         backButtonPanel.add(backButton);
     }
 
@@ -44,7 +44,7 @@ public class DisplaySetting extends JFrame {
         big = new JButton("big");
         if(big.getText().equals(stat)) big.setSelected(true);
         big.setPreferredSize(new Dimension(180, 60));
-        big.addActionListener(listner);
+        big.addActionListener(this);
         big.setFocusPainted(false);
         bigPanel.add(big);
 
@@ -52,7 +52,7 @@ public class DisplaySetting extends JFrame {
         normal = new JButton("normal");
         if(normal.getText().equals(stat)) normal.setSelected(true);
         normal.setPreferredSize(new Dimension(180, 60));
-        normal.addActionListener(listner);
+        normal.addActionListener(this);
         normal.setFocusPainted(false);
         normalPanel.add(normal);
 
@@ -60,7 +60,7 @@ public class DisplaySetting extends JFrame {
         small = new JButton("small");
         if(small.getText().equals(stat)) small.setSelected(true);
         small.setPreferredSize(new Dimension(180, 60));
-        small.addActionListener(listner);
+        small.addActionListener(this);
         small.setFocusPainted(false);
         smallPanel.add(small);
 
@@ -69,32 +69,42 @@ public class DisplaySetting extends JFrame {
         menuPanel.add(smallPanel);
 
     }
-    ActionListener listner = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (backButton.equals(e.getSource())) {
-                go_back();
-            }
-            else if (big.equals(e.getSource())) { // restartButton pressed
-                DataManager.getInstance().setDisplay("big");
-                go_back();
-            }
-            else if (normal.equals(e.getSource())) { // restartButton pressed
-                DataManager.getInstance().setDisplay("normal");
-                go_back();
-            }
-            else { // restartButton pressed
-                DataManager.getInstance().setDisplay("small");
-                go_back();
-            }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (backButton.equals(e.getSource())) {
+            go_back();
         }
-    };
+        else if (big.equals(e.getSource())) { // restartButton pressed
+            DataManager.getInstance().setDisplay("big");
+            go_back();
+        }
+        else if (normal.equals(e.getSource())) { // restartButton pressed
+            DataManager.getInstance().setDisplay("normal");
+            go_back();
+        }
+        else { // restartButton pressed
+            DataManager.getInstance().setDisplay("small");
+            go_back();
+        }
+    }
 
     private void go_back(){
         new Setting(getThis().getLocation().x, getThis().getLocation().y);
         getThis().dispose();
     }
 
+    public JButton getBig() {
+        return big;
+    }
+
+    public JButton getNormal() {
+        return normal;
+    }
+
+    public JButton getSmall() {
+        return small;
+    }
 
     private JFrame getThis() {return this;}
 }
