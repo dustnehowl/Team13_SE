@@ -626,6 +626,7 @@ public class VSmode extends JFrame {
 
         while(!isBlocked('d',p))
             p.y++;
+        p.total_score += p.y;
         placeBlock(p);
         drawBoard(p);
         moveDown(p);
